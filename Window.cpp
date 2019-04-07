@@ -11,9 +11,9 @@ Window::Window() {
   this-> occupied = 0;
   this-> idleTime = new double[100]; //default: number of idle times for each window throughout the day.
   for(int i = 0; i < 100; ++i) {
-    idleTime[i] = 0;
+    idleTime[i] = -1;
   }
-  this-> idleTimeSize = 0;
+  this-> idleTimeSize = -1;
 }
 Window::~Window() {
   delete[] idleTime;
@@ -43,12 +43,12 @@ int Window::getIdleTimeSize() {
   return this->idleTimeSize;
 }
 void Window::addIdleTime() {
-  idleTime[idleTimeSize] = 1;
   this->idleTimeSize++;
+  idleTime[idleTimeSize] = 0;
+
 }
-//void closeWindow()
 void Window::incrementIdleTime() {
-  if(this->idleTimeSize-1 >= 0) {
-    this->idleTime[this->idleTimeSize-1] += 1;
+  if(this->idleTimeSize >= 0) {
+    this->idleTime[this->idleTimeSize] += 1;
   }
 }

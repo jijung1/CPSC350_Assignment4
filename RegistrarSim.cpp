@@ -31,11 +31,15 @@ RegistrarSim::~RegistrarSim() {
 }
 
 void RegistrarSim::run() {
+  bool* idleOver5 = new bool[openWindows];
+  for (int i = 0; i < openWindows; ++i) {
+    idleOver5[i] = false;
+  }
   int time = 0;
   int numIdle = 0;
   int studentCount = students->getSize();
   int numStudents = studentCount;
-  double* studentWaitTime = new double[numStudents];
+  double* studentWaitTime = new double[numStudents]; //need this for student data
   int n = 0;
   int servicedStudents = 0;
   while(true) {
@@ -58,14 +62,8 @@ void RegistrarSim::run() {
         registrarWindows[k].setOccupied(temp.getTimeRequired());
         registrarWindows[k].setAvailable(false);
       }
-      else if(registrarWindows[k].isAvailable()) {
-        if(time == 0) {
-          registrarWindows[k].addIdleTime();
-          numIdle++;
-        }
-        else {
+      if(registrarWindows[k].isAvailable() && time != 0) {
           registrarWindows[k].incrementIdleTime();
-        }
       }
     }
     for (int k = 0; k < waitLine->getSize(); ++k) { //increment wait time for students in queue
@@ -76,9 +74,73 @@ void RegistrarSim::run() {
       waitLine->insert(temp);
     }
 
+    bool endSim = true; //end conditions
+    for (int j = 0; j < openWindows; ++j) {
+      if (!registrarWindows[j].isAvailable()) {
+        registrarWindows[j].setOccupied(registrarWindows[j].getOccupied()-1); //decrement occupied counter
+        endSim = false;
+      }
+    }
+
+    if(studentCount == 0 && endSim){  //if no students left and all windows are available, end
+
+      cout << "all students serviced\n Metrics: " << endl;
+      double* idleTimes = new double[numIdle];
+      int num = 0;
+      for (int i = 0; i < openWindows; ++i) {
+        for(int j = 0; j < (registrarWindows[i].getIdleTimeSize() + 1); ++j) {
+          //cout << registrarWindows[i].getIdleTime(j) << endl;
+          if (registrarWindows[i].getIdleTime(j) > 0) {
+            if(registrarWindows[i].getIdleTime(j) > 5) {
+              idleOver5[i] = true;
+            }
+            idleTimes[num++] = registrarWindows[i].getIdleTime(j);
+          }
+        }
+      }
+      double *winIdleTime = new double[num];
+      cout << "number of idle times: " << num << endl;
+      for (int j = 0; j < num; ++j) {
+        winIdleTime[j] = idleTimes[j];
+        cout << "idle times: " << idleTimes[j] << endl;
+      }
+      cout << "number of students processed: " << numStudents << endl;
+      for (int j = 0; j < numStudents; ++j) {
+        cout << "wait time " << j << ": " << studentWaitTime[j] << endl;
+      }
+
+      cout.setf(ios::showpoint);
+      cout.setf(ios::fixed);
+      cout.precision(2);
+
+
+
+      Arithmetic studentData(studentWaitTime, numStudents);
+      cout << "Mean Student wait time: " << studentData.mean() << " minutes" << endl;
+      cout << "Median Student wait time: " << studentData.median() << " minutes" << endl;
+      cout << "Longest student wait time: " << studentData.max() << " minutes" << endl;
+      cout << "Number of students who waited over 10 minutes: " << studentData.greaterThan(10) << " students" << endl;
+
+      Arithmetic windowData(winIdleTime, num);
+      int numIdleOver5 = 0;
+      for(int k = 0; k < openWindows; ++k) {
+        if(idleOver5[k]) {
+          numIdleOver5++;
+        }
+      }
+
+      cout << "Mean window idle time: " << windowData.mean() << " minutes" << endl;
+      cout << "Longest window idle time: " << windowData.max() << " minutes" << endl;
+      cout << "Number of windows idle over 5 minutes: " << numIdleOver5 << endl;
+
+
+      //number of windows over 5 minutes windowdata.greaterThan(5)
+      break;
+    }
     int i = 0;
     while(i < openWindows) {  //check and update open windows
       if(registrarWindows[i].getOccupied() <= 0 && !registrarWindows[i].isAvailable()) {
+        cout << "window: " << i << " is available\n";
         registrarWindows[i].setAvailable(true); //reset availability
         registrarWindows[i].addIdleTime();
         numIdle++;
@@ -88,53 +150,6 @@ void RegistrarSim::run() {
         registrarWindows[i].setAvailable(false);
       }
       i++;
-    }
-
-
-    bool endSim = true; //end conditions
-    for (int j = 0; j < openWindows; ++j) {
-      if (!registrarWindows[j].isAvailable()) {
-        registrarWindows[j].setOccupied(registrarWindows[j].getOccupied()-1); //decrement occupied counter
-        endSim = false;
-      }
-    }
-    if(studentCount == 0 && endSim){  //if no students left and all windows are available, end
-      cout << "all students serviced\n Metrics: " << endl;
-      cout << "num idles: " << numIdle << endl;
-      double* idleTimes = new double[numIdle];
-      int num = 0;
-      for (int i = 0; i < openWindows; ++i) {
-        for(int j = 0; j < registrarWindows[i].getIdleTimeSize(); ++j) {
-          cout << registrarWindows[i].getIdleTime(j) << endl;
-          if (registrarWindows[i].getIdleTime(j) != 0) {
-            idleTimes[num++] = registrarWindows[i].getIdleTime(j);
-          }
-        }
-      }
-      for (int j = 0; j < numIdle; ++j) {
-        cout << "idle times: " << idleTimes[j] << endl;
-      }
-      for (int j = 0; j < numStudents; ++j) {
-        cout << "wait time " << j << ": " << studentWaitTime[j] << endl;
-      }
-
-      /*
-      double* studentdata = new double[Students.getSize()];
-      Window* windowData;
-      //numStudents
-      //numIdle
-      Arithmetic studentInfo();
-
-      //mean student wait time studentdata.mean()
-      //median student wait time studentdata.median()
-      //longest student wait time studentdata.max()
-      //number of students over 10 minutes studentdata.greaterThan(10);
-      //mean window idle time (all idle times / idle count) windowData.mean()
-      //longest window idle time windowdata.max();
-      //number of windows over 5 minutes windowdata.greaterThan(5)
-
-      */
-      break;
     }
     cout << "time: " << time << endl;
     cout << "students in line: " << waitLine->getSize() << endl;

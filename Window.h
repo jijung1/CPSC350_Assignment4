@@ -13,6 +13,7 @@ public:
   bool isAvailable();
   void setAvailable(bool available);
   double* getIdleTimes(); //returns array of idle times;
+  double getIdleTime(int index);
   int getIdleTimeSize(); //returns size of array idleTime
   void addIdleTime();
   void incrementIdleTime();

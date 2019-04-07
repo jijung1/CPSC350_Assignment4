@@ -36,6 +36,9 @@ int Window::getOccupied() {
 double* Window::getIdleTimes() {
   return this->idleTime;
 }
+double Window::getIdleTime(int index) {
+  return this->idleTime[index];
+}
 int Window::getIdleTimeSize() {
   return this->idleTimeSize;
 }

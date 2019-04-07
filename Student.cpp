@@ -21,6 +21,15 @@ void Student::incrementWaitTime() {
   this-> waitTime += 1;
 }
 
+int Student::getTimeRequired() {
+  return this->timeRequired;
+}
+
+int Student::getArrivalTime() {
+  return this->arrivalTime;
+}
+
+
 void Student::setArrivalTime(int arrivalTime) {
   this->arrivalTime = arrivalTime;
 }

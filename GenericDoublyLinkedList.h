@@ -1,6 +1,8 @@
+#ifndef GENERICDOUBLYLINKEDLIST_H
+#define GENERICDOUBLYLINKEDLIST_H
+
 #include <iostream>
 #include <stdexcept>
-
 using namespace std;
 /*
 class for file io, class for Arithmetic, class for generic queue, dll, list interface, student class (time of entry, time required), window class (window can just be an array that takes in student.timereq)
@@ -15,6 +17,15 @@ public:
     E data;
     ListNode *next;
     ListNode *prev;
+};
+
+class ListEmpty : public runtime_error {
+public:
+  ListEmpty(const string& err) : runtime_error(err) {};
+};
+class KeyNotFound : public runtime_error {
+public:
+  KeyNotFound(const string& err) : runtime_error(err) {};
 };
 
 template <typename E>
@@ -37,34 +48,21 @@ ListNode<E>::~ListNode() {
 }
 
 template <typename E>
-class DoublyLinkedList
-{
+class DoublyLinkedList {
 private:
   ListNode<E> *front;  //sentinel node for beginning of list
   ListNode<E> *back;   //sentinel node for end of list
   unsigned int size;
 public:
   DoublyLinkedList();
-  ~DoublyLinkedList();
+  virtual ~DoublyLinkedList();
   void insertFront(E Data);
   void insertBack(E data);
   E removeFront();
   E removeBack();
-  int getSize();
-  bool empty();
+  virtual int getSize();
+  virtual bool empty();
   E remove(E key);
-  //find (E data);
-
-
-};
-
-class ListEmpty : public runtime_error {
-public:
-  ListEmpty(const string& err) : runtime_error(err) {};
-};
-class KeyNotFound : public runtime_error {
-public:
-  KeyNotFound(const string& err) : runtime_error(err) {};
 };
 
 template <typename E>
@@ -159,3 +157,5 @@ E DoublyLinkedList<E>::remove(E key) { //search for data and remove it
 
   return temp;
 }
+
+#endif

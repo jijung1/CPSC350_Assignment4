@@ -49,7 +49,7 @@ double Arithmetic::max() {
 int Arithmetic::greaterThan(double key) {
   int count = 0;
   for (int i = 0; i < this->size; ++i) {
-    if (this->values[i] > key) {
+    if (this->values[i] > static_cast<int>(key)) {
       count++;
     }
   }

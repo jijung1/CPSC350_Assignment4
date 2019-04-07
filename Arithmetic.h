@@ -15,6 +15,8 @@ public:
   double median();
   double max();
   int greaterThan(double key);  //returns number of values that are >key
+
+  
 };
 
 #endif /*ARITHMETIC_H*/

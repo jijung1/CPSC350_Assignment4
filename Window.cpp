@@ -3,18 +3,36 @@
 
 */
 #include "Window.h"
+#include <iostream>
+using namespace std;
 
 Window::Window() {
-  this-> isOpen = true;
+  this-> available = true;
+  this-> occupied = 0;
   this-> idleTime = new double[100]; //default: number of idle times for each window throughout the day.
+  for(int i = 0; i < 100; ++i) {
+    idleTime[i] = 0;
+  }
   this-> idleTimeSize = 0;
 }
 Window::~Window() {
   delete[] idleTime;
 }
-bool Window::open() {
-  return this->isOpen;
+bool Window::isAvailable() {
+  return this->available;
 }
+void Window::setAvailable(bool available) {
+  this->available = available;
+}
+
+void Window::setOccupied(int occupied) {
+  this->occupied = occupied;
+}
+int Window::getOccupied() {
+  return this->occupied;
+}
+
+//void Window::setIsOpen(bool open) {this->isOpen = open;}
 double* Window::getIdleTimes() {
   return this->idleTime;
 }
@@ -22,10 +40,12 @@ int Window::getIdleTimeSize() {
   return this->idleTimeSize;
 }
 void Window::addIdleTime() {
-  this->idleTime[this->idleTimeSize] = 1;
+  idleTime[idleTimeSize] = 1;
   this->idleTimeSize++;
-
 }
+//void closeWindow()
 void Window::incrementIdleTime() {
-  this->idleTime[this->idleTimeSize-1] += 1;
+  if(this->idleTimeSize-1 >= 0) {
+    this->idleTime[this->idleTimeSize-1] += 1;
+  }
 }

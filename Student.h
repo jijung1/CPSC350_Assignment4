@@ -1,5 +1,7 @@
 #ifndef STUDENT_H
 #define STUDENT_H
+#include <iostream>
+using namespace std;
 
 class Student {
 private:
@@ -12,10 +14,14 @@ public:
   ~Student();
   int getWaitTime();
   void incrementWaitTime();
+  int getArrivalTime();
+  int getTimeRequired();
 
-  //mutator functions
+
+//  mutator functions
   void setArrivalTime(int arrivalTime);
   void setTimeRequired(int timeRequired);
+
 };
 
 

@@ -17,8 +17,11 @@ public:
   FileIO(string filePath);
   ~FileIO();
   string readLine();
+  string readFile();
+  bool endOfFile();
   //char readChar();
   int readInt();
+  string toUpperCase(string someString);
 };
 
 

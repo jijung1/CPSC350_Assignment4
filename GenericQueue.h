@@ -3,6 +3,10 @@
   DLL based generic queue
 
 */
+
+#ifndef GENERICQUEUE_H
+#define GENERICQUEUE_H
+
 #include "GenericDoublyLinkedList.h"
 #include <iostream>
 #include <stdexcept>
@@ -21,7 +25,7 @@ class GenQueue {
     bool isEmpty();
     int getSize();
   private:
-    DoublyLinkedList<E> myQueue;
+    DoublyLinkedList<E>* myQueue;
 };
 
 class QueueFull : public runtime_error {
@@ -36,11 +40,11 @@ public:
 //implementation
 template <typename E>
 GenQueue<E>::GenQueue() {
-    myQueue = new DoublyLinkedList<E>(100); //default size = 100
+    myQueue = new DoublyLinkedList<E>();
 }
 template <typename E>
 GenQueue<E>::GenQueue(int maxSize) {
-  myQueue = new DoublyLinkedList<E>(maxSize);
+  myQueue = new DoublyLinkedList<E>();
 }
 template <typename E>
 GenQueue<E>::~GenQueue() {
@@ -48,11 +52,11 @@ GenQueue<E>::~GenQueue() {
 }
 template <typename E>
 void GenQueue<E>::insert(E d) {
-  myQueue.insertBack(d);
+  myQueue->insertBack(d);
 }
 template <typename E>
 E GenQueue<E>::remove() {
-  E temp = myQueue.removeFront();
+  E temp = myQueue->removeFront();
   return temp;
 }
 template <typename E>
@@ -60,20 +64,20 @@ E GenQueue<E>::front() {  //aka peek()
   if(isEmpty()) {
     throw QueueEmpty("front from empty Queue!");
   }
-  E temp = myQueue.removeFront();
-  myQueue.insertFront(temp);
+  E temp = myQueue->removeFront();
+  myQueue->insertFront(temp);
   return temp;
 }
 
 template <typename E>
 bool GenQueue<E>::isEmpty() {
-  return (myQueue.size() == 0);
+  return (myQueue->getSize() == 0);
 }
 template <typename E>
 int GenQueue<E>::getSize() {
-  return myQueue.getSize();
+  return myQueue->getSize();
 }
-
+/*
 int main(int argc, char** argv) {
   GenQueue<int> a(4);
   int n = 2;
@@ -113,3 +117,6 @@ int main(int argc, char** argv) {
   cout << a.front();
   return 0;
 }
+*/
+
+#endif

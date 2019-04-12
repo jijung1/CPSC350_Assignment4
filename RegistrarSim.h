@@ -1,3 +1,15 @@
+/*
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Class invariant: Every instance of this class will have members: Window* registrarWindows, int openWindows, DoublyLinkedList<Student>* students, and GenQueue<Student>* waitLine.
+*/
+
 #ifndef REGISTRARSIM_H
 #define REGISTRARSIM_H
 
@@ -14,7 +26,7 @@ using namespace std;
 
 class RegistrarSim {
 public:
-  RegistrarSim(string filePath);
+  RegistrarSim(string filePath);  //main constructor that reads from specified filepath to initialize the simulation
   ~RegistrarSim();
   void run();
 private:

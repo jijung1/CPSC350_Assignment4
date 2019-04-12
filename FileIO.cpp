@@ -1,15 +1,23 @@
 /*
-  .cpp implementation file for FileIO class
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Implementation file for FileIO class
 */
 #include "FileIO.h"
 #include <fstream>
 #include <iostream>
 
-FileIO::FileIO(string filePath){
+FileIO::FileIO(string filePath){ //main contructor
   this->filePath = filePath;
   this->istream = ifstream(filePath);
 }
-FileIO::~FileIO() {
+FileIO::~FileIO() { //destructor
   this->istream.close();
 }
 

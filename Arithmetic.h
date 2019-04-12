@@ -1,9 +1,18 @@
+/*
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Class invariant: Every instance of this object will have double* values and int size
+*/
+
 #ifndef ARITHMETIC_H
 #define ARITHMETIC_H
 
-/*
-  Arithmetic class for handling mathematic operations
-*/
 
 class Arithmetic {
 private:
@@ -16,7 +25,7 @@ public:
   double max();
   int greaterThan(double key);  //returns number of values that are >key
 
-  
+
 };
 
 #endif /*ARITHMETIC_H*/

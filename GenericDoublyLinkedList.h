@@ -1,13 +1,22 @@
+/*
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Generic Double Linked List file
+*/
+
 #ifndef GENERICDOUBLYLINKEDLIST_H
 #define GENERICDOUBLYLINKEDLIST_H
 
 #include <iostream>
 #include <stdexcept>
 using namespace std;
-/*
-class for file io, class for Arithmetic, class for generic queue, dll, list interface, student class (time of entry, time required), window class (window can just be an array that takes in student.timereq)
-and exception class
-*/
+
 template <typename E>
 class ListNode {
 public:
@@ -19,11 +28,11 @@ public:
     ListNode *prev;
 };
 
-class ListEmpty : public runtime_error {
+class ListEmpty : public runtime_error {  //throws this error when attempting to access data from empty list
 public:
   ListEmpty(const string& err) : runtime_error(err) {};
 };
-class KeyNotFound : public runtime_error {
+class KeyNotFound : public runtime_error {  //throws this error when search for a key is not found 
 public:
   KeyNotFound(const string& err) : runtime_error(err) {};
 };

@@ -1,3 +1,15 @@
+/*
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Implementation of Arithmetic class
+*/
+
 #include "Arithmetic.h"
 #include <iostream>
 

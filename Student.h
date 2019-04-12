@@ -1,3 +1,15 @@
+/*
+Name:                   Jin Jung
+Student ID:             2329401
+Email:                  jijung@chapman.edu
+Course no. & Section:   CS350-02
+Assignment:             4
+*/
+
+/*
+  Class invariant: Every instance of this class will have int arrivalTime, int timeRequired, and int waitTime
+*/
+
 #ifndef STUDENT_H
 #define STUDENT_H
 #include <iostream>
@@ -16,9 +28,6 @@ public:
   void incrementWaitTime();
   int getArrivalTime();
   int getTimeRequired();
-
-
-//  mutator functions
   void setArrivalTime(int arrivalTime);
   void setTimeRequired(int timeRequired);
 
